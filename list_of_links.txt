@@ -1,0 +1,5 @@
+https://kubernetes.io/docs/reference/kubectl/overview/#operations
+https://kubernetes.io/docs/reference/kubectl/overview/#resource-types
+https://kubernetes.io/docs/reference/kubectl/overview/#output-options
+https://kubernetes.io/docs/reference/kubectl/kubectl/
+https://kubernetes.io/docs/reference/kubectl/cheatsheet/
