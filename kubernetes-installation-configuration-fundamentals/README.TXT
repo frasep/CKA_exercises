@@ -1,6 +1,9 @@
-***All demos have been tested against Ubuntu 18.04 and 20.04 and Kubernetes 1.24.3***
+***All demos have been tested against Ubuntu 22.04 and Kubernetes 1.26.0***
 
 There may be slight differences in the code from what's in the video course, but the concepts are all the same.
+* Update 19 Feb 2023
+  * Changed containerd installation repo to docker's. 1.6 is required and the ubuntu's repo only provides 1.5.9
+  * Moved hello-app to a new container repository, the gcr application changed and no longer works for demos.
 
 * Update 20 Aug 2022
   * The course downloads have been updated and tested with 1.24.3. 

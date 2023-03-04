@@ -1,5 +1,5 @@
 #Setup 
-#   1. 4 VMs Ubuntu 18.04, 1 control plane, 3 nodes.
+#   1. 4 VMs Ubuntu 22.04, 1 control plane, 3 nodes.
 #   2. Static IPs on individual VMs
 #   3. /etc/hosts hosts file includes name to IP mappings for VMs
 #   4. Swap is disabled
@@ -44,9 +44,14 @@ EOF
 sudo sysctl --system
 
 
-#Install containerd
+#Install containerd...we need to install from the docker repo to get containerd 1.6, the ubuntu repo stops at 1.5.9
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  
 sudo apt-get update 
-sudo apt-get install -y containerd
+sudo apt-get install -y containerd.io
 
 
 #Create a containerd configuration file
@@ -62,7 +67,7 @@ sudo containerd config default | sudo tee /etc/containerd/config.toml
 #At the end of this section, change SystemdCgroup = false to SystemdCgroup = true
         [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
         ...
-#          [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
+          [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
             SystemdCgroup = true
 
 #You can use sed to swap in true
@@ -95,8 +100,8 @@ apt-cache policy kubelet | head -n 20
 #Install the required packages, if needed we can request a specific version. 
 #Use this version because in a later course we will upgrade the cluster to a newer version.
 #Try to pick one version back because later in this series, we'll run an upgrade
-VERSION=1.24.3-00
-sudo apt-get install -y kubelet=$VERSION kubeadm=$VERSION kubectl=$VERSION
+VERSION=1.26.0-00
+sudo apt-get install -y kubelet=$VERSION kubeadm=$VERSION kubectl=$VERSION 
 sudo apt-mark hold kubelet kubeadm kubectl containerd
 
 

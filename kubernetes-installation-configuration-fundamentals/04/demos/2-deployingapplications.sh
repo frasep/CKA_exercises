@@ -4,12 +4,12 @@ ssh aen@c1-cp1
 
 #Deploying resources imperatively in your cluster.
 #kubectl create deployment, creates a Deployment with one replica in it.
-#This is pulling a simple hello-world app container image from Google's container registry.
-kubectl create deployment hello-world --image=gcr.io/google-samples/hello-app:1.0
+#This is pulling a simple hello-world app container image from a container registry.
+kubectl create deployment hello-world --image=psk8s.azurecr.io/hello-app:1.0
 
 
 #But let's deploy a single "bare" pod that's not managed by a controller...
-kubectl run hello-world-pod --image=gcr.io/google-samples/hello-app:1.0
+kubectl run hello-world-pod --image=psk8s.azurecr.io/hello-app:1.0
 
 
 #Let's see of the Deployment creates a single replica and also see if that bare pod is created. 
@@ -41,7 +41,7 @@ kubectl logs hello-world-pod
 #Starting a process inside a container inside a pod.
 #We can use this to launch any process as long as the executable/binary is in the container.
 #Launch a shell into the container. Callout that this is on the *pod* network.
-kubectl exec -it hello-world-pod -- /bin/sh
+kubectl exec -it  hello-world-pod -- /bin/sh
 hostname
 ip addr
 exit
@@ -131,13 +131,13 @@ kubectl get all
 #We could write the yaml by hand...but we can use dry-run=client to build it for us
 #This can be used a a template for move complex deployments.
 kubectl create deployment hello-world \
-     --image=gcr.io/google-samples/hello-app:1.0 \
+     --image=psk8s.azurecr.io/hello-app:1.0 \
      --dry-run=client -o yaml | more 
 
 
 #Let's write this deployment yaml out to file
 kubectl create deployment hello-world \
-     --image=gcr.io/google-samples/hello-app:1.0 \
+     --image=psk8s.azurecr.io/hello-app:1.0 \
      --dry-run=client -o yaml > deployment.yaml
 
 

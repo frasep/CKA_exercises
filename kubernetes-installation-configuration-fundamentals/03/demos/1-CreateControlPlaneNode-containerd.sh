@@ -8,7 +8,7 @@ ssh aen@c1-cp1
 #0 - Creating a Cluster
 #Create our kubernetes cluster, specify a pod network range matching that in calico.yaml! 
 #Only on the Control Plane Node, download the yaml files for the pod network.
-wget https://docs.projectcalico.org/manifests/calico.yaml
+wget https://raw.githubusercontent.com/projectcalico/calico/master/manifests/calico.yaml
 
 
 #Look inside calico.yaml and find the setting for Pod Network IP address range CALICO_IPV4POOL_CIDR, 
@@ -18,7 +18,8 @@ vi calico.yaml
 
 
 #You can now just use kubeadm init to bootstrap the cluster
-sudo kubeadm init --kubernetes-version v1.24.3
+sudo kubeadm init --kubernetes-version v1.26.0
+
 #sudo kubeadm init #remove the kubernetes-version parameter if you want to use the latest.
 
 
